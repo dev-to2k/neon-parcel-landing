@@ -50,61 +50,94 @@
   let lenis = null;
   if (window.Lenis && !reduce) {
     lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.05,
       smoothWheel: true,
-      touchMultiplier: 1.2,
+      touchMultiplier: 1.15,
+      // keep native scroll so layout/pin stays correct
+      syncTouch: true,
     });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
+    window.__npLenis = lenis;
   }
+  window.__npScrollTo = (y) => {
+    if (lenis) lenis.scrollTo(y, { immediate: true });
+    else window.scrollTo(0, y);
+  };
 
   // Hero entrance
   gsap.from('.hero-ui > *', {
     y: 18, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power2.out', delay: 0.15,
   });
 
-  // Route pin scrub — integer pixel parallax
+  // Route pin scrub — GSAP pin + full-viewport parallax + Neon→Paris
   const layFar = document.getElementById('layFar');
   const layMid = document.getElementById('layMid');
   const layNear = document.getElementById('layNear');
   const laySign = document.getElementById('laySign');
   const dayNight = document.getElementById('dayNight');
+  const nightVeil = document.getElementById('nightVeil');
   const courier = document.getElementById('courier');
   const parcelFly = document.getElementById('parcelFly');
   const eiffel = document.getElementById('eiffel');
   const biomeTag = document.getElementById('biomeTag');
   const routeCopy = document.getElementById('routeCopy');
   const mailbox = document.getElementById('mailbox');
+  const plateNeon = document.getElementById('plateNeon');
+  const plateParis = document.getElementById('plateParis');
+  const routeSticky = document.querySelector('.route-sticky');
+  const px = (n) => Math.round(n);
+
+  // Pin the viewport panel for the whole route section height
+  ScrollTrigger.create({
+    trigger: '#route',
+    start: 'top top',
+    end: 'bottom bottom',
+    pin: routeSticky,
+    pinSpacing: false,
+    anticipatePin: 1,
+  });
+
+  gsap.set([layFar, layMid, layNear, laySign], { opacity: 1 });
+  gsap.set(plateNeon, { opacity: 0 });
+  gsap.set([plateParis, eiffel], { opacity: 0 });
 
   const routeTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#route',
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.6,
+      scrub: 0.5,
       invalidateOnRefresh: true,
     },
   });
 
-  routeTl.to(layFar, { x: () => -Math.round(innerWidth * 0.35), ease: 'none' }, 0);
-  routeTl.to(layMid, { x: () => -Math.round(innerWidth * 0.7), ease: 'none' }, 0);
-  routeTl.to(layNear, { x: () => -Math.round(innerWidth * 1.15), ease: 'none' }, 0);
-  routeTl.to(laySign, { x: () => -Math.round(innerWidth * 0.9), ease: 'none' }, 0);
-  routeTl.to(courier, {
-    x: () => Math.round(innerWidth * 0.55),
-    y: () => -Math.round(innerHeight * 0.08),
-    ease: 'none',
-  }, 0);
-  routeTl.to(parcelFly, {
-    x: () => Math.round(innerWidth * 0.62),
-    y: () => -Math.round(innerHeight * 0.12),
-    rotation: 18,
-    ease: 'none',
-  }, 0);
-  routeTl.to(dayNight, { opacity: 0.85, ease: 'none' }, 0);
-  routeTl.to(eiffel, { opacity: 1, ease: 'none' }, 0.55);
-  routeTl.to(mailbox, { x: () => -Math.round(innerWidth * 0.08), ease: 'none' }, 0);
+  routeTl.to(layFar, { x: () => px(-innerWidth * 0.45), ease: 'none' }, 0);
+  routeTl.to(layMid, { x: () => px(-innerWidth * 0.9), ease: 'none' }, 0);
+  routeTl.to(layNear, { x: () => px(-innerWidth * 1.4), ease: 'none' }, 0);
+  routeTl.to(laySign, { x: () => px(-innerWidth * 1.1), ease: 'none' }, 0);
+
+  // Fly across — mostly X; tiny bob so they stay on rooftops
+  routeTl.fromTo(courier,
+    { x: 0, y: 0 },
+    { x: () => px(innerWidth * 0.7), y: () => px(-innerHeight * 0.03), ease: 'none' },
+    0
+  );
+  routeTl.fromTo(parcelFly,
+    { x: 0, y: 0, rotation: -6 },
+    { x: () => px(innerWidth * 0.76), y: () => px(-innerHeight * 0.05), rotation: 20, ease: 'none' },
+    0
+  );
+  routeTl.to(mailbox, { x: () => px(-innerWidth * 0.1), ease: 'none' }, 0);
+
+  // Day → night, then Paris plate + Eiffel over dimmed neon layers
+  routeTl.to(dayNight, { opacity: 0, ease: 'none' }, 0);
+  routeTl.to(nightVeil, { opacity: 0.85, ease: 'none' }, 0);
+  routeTl.to([layNear, layMid, laySign], { opacity: 0.2, ease: 'none' }, 0.48);
+  routeTl.to(layFar, { opacity: 0.3, ease: 'none' }, 0.48);
+  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.82, ease: 'none' }, 0.4);
+  routeTl.fromTo(eiffel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none' }, 0.4);
 
   ScrollTrigger.create({
     trigger: '#route',
@@ -112,12 +145,15 @@
     end: 'bottom bottom',
     onUpdate: (self) => {
       const p = self.progress;
-      if (p < 0.55) {
-        biomeTag.textContent = 'BIOME · NEON';
-        routeCopy.textContent = 'Bay cùng parcel qua skyline Warped City (CC0) — integer-pixel parallax.';
+      if (p < 0.35) {
+        biomeTag.textContent = 'BIOME · NEON · DAY→NIGHT';
+        routeCopy.textContent = 'Bay cùng parcel qua skyline Warped City (CC0) — parallax integer-pixel.';
+      } else if (p < 0.5) {
+        biomeTag.textContent = 'BIOME · NEON · NIGHT';
+        routeCopy.textContent = 'Đêm neon — rooftops + mailbox depot. Giữ combo, giao hàng.';
       } else {
-        biomeTag.textContent = 'BIOME · PARIS';
-        routeCopy.textContent = 'Paris night — Eiffel CC0 hiện lên mansard. Giao hàng không ngủ.';
+        biomeTag.textContent = 'BIOME · PARIS · NIGHT';
+        routeCopy.textContent = 'Paris night — Eiffel CC0 hiện lên. Delivery route tiếp tục.';
       }
     },
   });
