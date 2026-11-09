@@ -134,10 +134,11 @@
   // Day → night, then Paris plate + Eiffel over dimmed neon layers
   routeTl.to(dayNight, { opacity: 0, ease: 'none' }, 0);
   routeTl.to(nightVeil, { opacity: 0.85, ease: 'none' }, 0);
-  routeTl.to([layNear, layMid, laySign], { opacity: 0.2, ease: 'none' }, 0.48);
-  routeTl.to(layFar, { opacity: 0.3, ease: 'none' }, 0.48);
-  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.82, ease: 'none' }, 0.4);
-  routeTl.fromTo(eiffel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none' }, 0.4);
+  // Keep Warped layers mostly opaque so rooftops stay full-bleed; Paris = tint + Eiffel
+  routeTl.to([layNear, layMid, laySign], { opacity: 0.55, ease: 'none' }, 0.5);
+  routeTl.to(layFar, { opacity: 0.45, ease: 'none' }, 0.5);
+  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.38, ease: 'none' }, 0.4);
+  routeTl.fromTo(eiffel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none' }, 0.38);
 
   ScrollTrigger.create({
     trigger: '#route',
