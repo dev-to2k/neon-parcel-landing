@@ -53,21 +53,24 @@
   <section class="route" id="route" aria-label="Delivery route">
     <div class="route-sticky">
       <div class="skyline" aria-hidden="true">
-        <img class="plate pixel" src="assets/media/04-gameplay.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22;filter:saturate(1.2) brightness(.7)">
+        <img class="plate pixel" id="plateNeon" src="assets/media/04-gameplay.png" alt="" width="960" height="540" hidden>
+        <img class="plate paris pixel" id="plateParis" src="assets/media/102-paris-night.png" alt="" width="960" height="540">
         <div class="layer far" id="layFar" style="background-image:url('assets/warped/skyline-a.png')"></div>
         <div class="layer mid" id="layMid" style="background-image:url('assets/warped/buildings-bg.png')"></div>
         <div class="layer near" id="layNear" style="background-image:url('assets/warped/near-buildings-bg.png')"></div>
         <img class="layer sign pixel" id="laySign" src="assets/warped/hotel-sign.png" alt="" width="68" height="35">
         <div class="daynight" id="dayNight"></div>
-        <img class="courier pixel" id="courier" src="assets/sprites/courier.png" alt="" width="28" height="32">
-        <img class="parcel-fly pixel" id="parcelFly" src="assets/sprites/parcel.png" alt="" width="18" height="14" style="background:transparent;border:0;box-shadow:none;width:22px;height:18px">
-        <img class="mailbox pixel" id="mailbox" src="assets/depot/mailbox-flag-up.png" alt="" width="44" height="48">
-        <img class="eiffel pixel" id="eiffel" src="assets/paris/eiffel.png" alt="" width="96" height="128">
+        <div class="nightveil" id="nightVeil"></div>
+        <img class="courier pixel" id="courier" src="assets/sprites/courier.png" alt="" width="70" height="80">
+        <img class="parcel-fly pixel" id="parcelFly" src="assets/sprites/parcel.png" alt="" width="36" height="28">
+        <img class="mailbox pixel" id="mailbox" src="assets/depot/mailbox-flag-up.png" alt="" width="66" height="72">
+        <img class="eiffel pixel" id="eiffel" src="assets/paris/eiffel.png" alt="" width="144" height="192">
+        <div class="ground" aria-hidden="true"></div>
       </div>
       <div class="route-caption">
         <h2>DELIVERY ROUTE</h2>
-        <p id="routeCopy">Cuộn để bay cùng parcel qua skyline Warped City — Neon night → Paris.</p>
-        <span class="biome-tag" id="biomeTag">BIOME · NEON</span>
+        <p id="routeCopy">Cuộn để bay cùng parcel qua skyline Warped City — Neon → Paris.</p>
+        <span class="biome-tag" id="biomeTag">BIOME · NEON · DAY</span>
       </div>
     </div>
   </section>
