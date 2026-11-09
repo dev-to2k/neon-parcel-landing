@@ -89,13 +89,13 @@
   const routeSticky = document.querySelector('.route-sticky');
   const px = (n) => Math.round(n);
 
-  // Pin the viewport panel for the whole route section height
+  // Pin sticky panel; pinSpacing adds scroll room (no empty 320vh leftover)
   ScrollTrigger.create({
-    trigger: '#route',
+    trigger: routeSticky,
     start: 'top top',
-    end: 'bottom bottom',
-    pin: routeSticky,
-    pinSpacing: false,
+    end: '+=220%',
+    pin: true,
+    pinSpacing: true,
     anticipatePin: 1,
   });
 
@@ -105,9 +105,9 @@
 
   const routeTl = gsap.timeline({
     scrollTrigger: {
-      trigger: '#route',
+      trigger: routeSticky,
       start: 'top top',
-      end: 'bottom bottom',
+      end: '+=220%',
       scrub: 0.5,
       invalidateOnRefresh: true,
     },
@@ -141,9 +141,9 @@
   routeTl.fromTo(eiffel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none' }, 0.38);
 
   ScrollTrigger.create({
-    trigger: '#route',
+    trigger: routeSticky,
     start: 'top top',
-    end: 'bottom bottom',
+    end: '+=220%',
     onUpdate: (self) => {
       const p = self.progress;
       if (p < 0.35) {
