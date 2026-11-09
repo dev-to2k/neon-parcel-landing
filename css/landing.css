@@ -99,7 +99,7 @@ a:hover{color:var(--parcel)}
 
 /* ROUTE PIN */
 .route{
-  position:relative;height:320vh;background:#05071a;
+  position:relative;background:#05071a;
 }
 .route-sticky{
   position:relative;height:100vh;height:100dvh;overflow:hidden;
@@ -218,7 +218,7 @@ a:hover{color:var(--parcel)}
 
 /* TERMINAL */
 .terminal{
-  position:relative;padding:120px 0 100px;background:#05071a;
+  position:relative;padding:72px 0 64px;background:#05071a;
   overflow:hidden;
 }
 .terminal .scan{
@@ -256,6 +256,7 @@ a:hover{color:var(--parcel)}
   .cta-row{flex-direction:column;align-items:stretch}
   .btn{width:100%}
   .how,.biomes,.cta-end{padding:64px 0}
+  .terminal{padding:48px 0}
   .term-box{padding:20px 14px}
   .term-line{font-size:14px}
   .grid4{grid-template-columns:1fr;gap:10px}
