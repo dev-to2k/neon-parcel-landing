@@ -1,12 +1,10 @@
-PUBLIC
-  LANDING_PINNED: https://cdn.jsdelivr.net/gh/dev-to2k/neon-parcel-landing@5c37e6099cb9dafd66fb1786ef7922882ffa4515/index.html
-  LANDING_@main: https://cdn.jsdelivr.net/gh/dev-to2k/neon-parcel-landing@main/index.html
-  LANDING_ALT: https://rawcdn.githack.com/dev-to2k/neon-parcel-landing/main/index.html
-  PLAY: https://cdn.jsdelivr.net/gh/dev-to2k/neon-parcel-play@main/index.html
-  DEMO: https://rawcdn.githack.com/dev-to2k/neon-parcel-demo/main/index.html?auto=1&map=neon
-  PAGES: https://dev-to2k.github.io/neon-parcel-landing/
+PUBLIC (GitHub Pages — canonical HTML)
+  LANDING: https://dev-to2k.github.io/neon-parcel-landing/
+  PLAY:    https://dev-to2k.github.io/neon-parcel-play/
+  DEMO:    https://raw.githack.com/dev-to2k/neon-parcel-demo/main/index.html?auto=1&map=neon
+           (demo origin ≠ github.io → localStorage isolated from play)
 
-LOCAL
-  http://127.0.0.1:8890/
-
-TIP: 5c37e6099cb9dafd66fb1786ef7922882ffa4515
+LOCAL box
+  LANDING http://127.0.0.1:8890/
+  PLAY    http://127.0.0.1:8780/
+  DEMO    http://127.0.0.1:8781/
