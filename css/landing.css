@@ -113,6 +113,15 @@ a:hover{color:var(--parcel)}
 .btn.primary{border-color:var(--parcel);background:rgba(255,43,214,.16);box-shadow:0 0 22px #ff2bd655}
 .btn.primary:hover{background:rgba(255,43,214,.3)}
 .hint{margin-top:8px;color:var(--muted);text-wrap:balance}
+.scroll-cue{
+  display:inline-block;margin-top:18px;color:var(--cyan);letter-spacing:.08em;
+  font-size:11px;opacity:.85;text-decoration:none;
+  animation:cueBob 1.8s ease-in-out infinite;
+}
+@keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){
+  .scroll-cue{animation:none}
+}
 
 /* ROUTE PIN */
 .route{
@@ -229,32 +238,36 @@ a:hover{color:var(--parcel)}
 
 /* Bridge route → terminal (kill dark empty band) */
 .route::after{
-  content:"";display:block;height:48px;margin-top:-48px;position:relative;z-index:2;
-  background:linear-gradient(180deg,transparent, #05071a 70%, #0a0e22);
+  content:"";display:block;height:20px;margin-top:-20px;position:relative;z-index:2;
+  background:linear-gradient(180deg,transparent, #05071a 60%, #0a0e22);
   pointer-events:none;
 }
 
 @media (max-width:520px){
   .route-caption{top:64px;bottom:auto;padding:8px 10px}
   .route-caption h2{font-size:14px}
-  .courier{width:48px;height:48px;left:10%;bottom:40%} /* ×3, middle third */
-  .parcel-fly{width:27px;height:21px;left:18%;bottom:46%}
-  .mailbox{width:48px;height:54px;right:5%;bottom:9%}
+  /* courier on clear sky center-right — clear of left boss/mech zone (0–180px) */
+  .courier{width:48px;height:48px;left:58%;bottom:42%}
+  .parcel-fly{width:27px;height:21px;left:72%;bottom:48%}
+  .mailbox{width:48px;height:54px;right:4%;bottom:9%}
   .eiffel{width:150px;height:200px;left:2%;bottom:12%;right:auto;z-index:6}
   .layer.sign{
     height:calc(35px * 2);left:4%;bottom:58%;max-width:32vw;
   }
-  .layer.mid{height:68%;opacity:.8}
-  /* push dense “boss” silhouette right of courier */
-  .layer.near{height:58%;opacity:.88;background-position:-140px bottom}
-  .layer.far{opacity:.7}
+  .layer.mid{height:64%;opacity:.55}
+  /* boss/mech band: push fully toward left edge + dim so courier separates */
+  .layer.near{
+    height:50%;opacity:.38;filter:brightness(.5) saturate(.65);
+    background-position:left bottom;
+  }
+  .layer.far{opacity:.55}
 }
 
 /* TERMINAL — tight to route */
 .terminal{
-  position:relative;padding:36px 0 56px;
-  background:linear-gradient(180deg,#0a0e22 0%, #05071a 28%, #05071a 100%);
-  overflow:hidden;margin-top:-8px;
+  position:relative;padding:20px 0 48px;
+  background:linear-gradient(180deg,#0a0e22 0%, #05071a 22%, #05071a 100%);
+  overflow:hidden;margin-top:-16px;
 }
 .terminal .scan{
   position:absolute;inset:0;pointer-events:none;
@@ -286,18 +299,19 @@ a:hover{color:var(--parcel)}
 @media (max-width:860px){.grid4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){
   .hero{
-    padding:72px 0 16px;min-height:100dvh;
+    padding:68px 0 8px;min-height:78dvh; /* peek route into fold, cut empty under CTA */
     align-content:start;place-items:center start;
     display:flex;flex-direction:column;justify-content:flex-start;align-items:center;
   }
   .hero > div{width:100%;display:flex;flex-direction:column;align-items:center}
   .hero-ui .h1{font-size:16px}
   .hero-frame{width:min(320px,86vw);margin-top:0}
-  .hero-ui{margin-top:10px}
+  .hero-ui{margin-top:8px}
+  .scroll-cue{margin-top:12px;margin-bottom:4px}
   .cta-row{flex-direction:column;align-items:stretch}
   .btn{width:100%}
   .how,.biomes,.cta-end{padding:56px 0}
-  .terminal{padding:28px 0 48px}
+  .terminal{padding:12px 0 40px;margin-top:-24px}
   .term-box{padding:20px 14px}
   .term-line{font-size:14px}
   .grid4{grid-template-columns:1fr;gap:10px}

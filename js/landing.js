@@ -99,7 +99,9 @@
     anticipatePin: 1,
   });
 
-  gsap.set([layFar, layMid, layNear, laySign], { opacity: 1 });
+  gsap.set([layFar, layMid, laySign], { opacity: 1 });
+  // Mobile: keep near/boss dim so courier on clear sky reads cleanly
+  gsap.set(layNear, { opacity: innerWidth <= 520 ? 0.38 : 1 });
   gsap.set(plateNeon, { opacity: 0 });
   gsap.set([plateParis, eiffel], { opacity: 0 });
 
@@ -115,22 +117,24 @@
 
   routeTl.to(layFar, { x: () => px(-innerWidth * 0.45), ease: 'none' }, 0);
   routeTl.to(layMid, { x: () => px(-innerWidth * 0.9), ease: 'none' }, 0);
-  // Mobile: start near layer shifted so boss silhouette sits right of courier
-  const nearShift = () => (innerWidth <= 520 ? px(innerWidth * 0.35) : 0);
+  // Mobile: keep near/boss band parked off the LEFT so courier (center-right) stays on clear sky
+  const nearShift = () => (innerWidth <= 520 ? px(-innerWidth * 0.55) : 0);
   gsap.set(layNear, { x: nearShift });
-  routeTl.to(layNear, { x: () => px(nearShift() - innerWidth * 1.4), ease: 'none' }, 0);
+  routeTl.to(layNear, { x: () => px(nearShift() - innerWidth * 1.15), ease: 'none' }, 0);
   routeTl.to(laySign, { x: () => px(-innerWidth * 1.1), ease: 'none' }, 0);
 
   // Fly across — mostly X; tiny bob so they stay on rooftops
-  // Fly across middle third; stay clear of far-left Eiffel and right mailbox
+  // Fly across; on mobile CSS parks courier center-right — limit X travel so it stays clear of left boss band
   routeTl.fromTo(courier,
     { x: 0, y: 0 },
-    { x: () => px(innerWidth * 0.55), y: () => px(-innerHeight * 0.02), ease: 'none' },
+    { x: () => px(innerWidth <= 520 ? innerWidth * 0.18 : innerWidth * 0.55),
+      y: () => px(-innerHeight * 0.02), ease: 'none' },
     0
   );
   routeTl.fromTo(parcelFly,
     { x: 0, y: 0, rotation: -6 },
-    { x: () => px(innerWidth * 0.6), y: () => px(-innerHeight * 0.04), rotation: 18, ease: 'none' },
+    { x: () => px(innerWidth <= 520 ? innerWidth * 0.2 : innerWidth * 0.6),
+      y: () => px(-innerHeight * 0.04), rotation: 18, ease: 'none' },
     0
   );
   // Mailbox stays on the right — slight drift only, never onto Eiffel (left)
