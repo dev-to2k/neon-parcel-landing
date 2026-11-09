@@ -1,6 +1,11 @@
 (() => {
-  const PLAY_ORIGIN = window.NP_PLAY_ORIGIN || 'http://127.0.0.1:8780';
-  const DEMO_ORIGIN = window.NP_DEMO_ORIGIN || 'http://127.0.0.1:8781';
+  const isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const PLAY_ORIGIN = window.NP_PLAY_ORIGIN || (isLocal
+    ? 'http://127.0.0.1:8780'
+    : 'https://cdn.jsdelivr.net/gh/dev-to2k/neon-parcel-play@main');
+  const DEMO_ORIGIN = window.NP_DEMO_ORIGIN || (isLocal
+    ? 'http://127.0.0.1:8781'
+    : 'https://rawcdn.githack.com/dev-to2k/neon-parcel-demo/main');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function openPlay() {
