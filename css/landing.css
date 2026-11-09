@@ -99,66 +99,122 @@ a:hover{color:var(--parcel)}
 
 /* ROUTE PIN */
 .route{
-  position:relative;height:280vh;background:linear-gradient(180deg,#05071a,#0a1028 40%,#12081c);
+  position:relative;height:320vh;background:#05071a;
 }
 .route-sticky{
-  position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
-  display:grid;place-items:center;
+  position:relative;height:100vh;height:100dvh;overflow:hidden;
+  /* GSAP ScrollTrigger pins this for the route scroll length */
 }
 .skyline{
-  position:absolute;inset:0;background:
-    radial-gradient(ellipse at 70% 12%, #ff9a3c44, transparent 42%),
-    radial-gradient(ellipse at 30% 8%, #ff2bd633, transparent 38%),
-    radial-gradient(ellipse at 50% 0%, #2bfff222, transparent 45%),
-    linear-gradient(180deg,#1a1040 0%,#0e1840 40%,#15102a 70%,#080612 100%);
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 70% 12%, #ff6b9d33, transparent 42%),
+    radial-gradient(ellipse at 20% 8%, #2bfff222, transparent 40%),
+    radial-gradient(circle at 78% 18%, #fff8 0 2px, transparent 3px),
+    radial-gradient(circle at 30% 22%, #fff6 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 10%, #fff5 0 1px, transparent 2px),
+    linear-gradient(180deg,#1a0a2e 0%,#14204a 32%,#0c1438 62%,#151028 88%,#0a0614 100%);
 }
-.skyline::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:28%;
-  background:linear-gradient(180deg,transparent,#05071add);pointer-events:none;
+/* full-bleed soft plate — cover entire sticky, sit behind layers */
+.skyline .plate{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center bottom;
+  opacity:0;filter:saturate(1.3) brightness(.8) contrast(1.08);
+  image-rendering:pixelated;pointer-events:none;z-index:0;
 }
-.layer{position:absolute;left:0;width:300%;height:60%;
-  background-repeat:repeat-x;image-rendering:pixelated;
-  will-change:transform;pointer-events:none}
-.layer.far{height:78%;bottom:12%;opacity:.9;background-size:auto 100%;
-  filter:brightness(1.15) saturate(1.35) contrast(1.05)}
-.layer.mid{height:62%;bottom:4%;opacity:1;background-size:auto 100%;
-  filter:brightness(1.05) saturate(1.25)}
-.layer.near{height:52%;bottom:0;opacity:1;background-size:auto 110%;
-  filter:brightness(1.1) saturate(1.3) drop-shadow(0 0 12px #2bfff233)}
-.layer.sign{width:auto;height:14vmin;max-height:90px;bottom:38%;left:62%;opacity:1;
-  filter:drop-shadow(0 0 10px #ff2bd6cc)}
+.skyline .plate.paris{
+  opacity:0;z-index:1;filter:saturate(1.25) brightness(.72) contrast(1.08);
+}
+.skyline .plate.paris.is-on{opacity:.72}
+
+.skyline .ground{
+  position:absolute;left:0;right:0;bottom:0;height:9%;
+  background:
+    linear-gradient(180deg,#2a1840 0%,#12182e 40%,#05071a 100%),
+    repeating-linear-gradient(90deg,#1a2238 0 10px,#0c101f 10px 20px);
+  border-top:4px solid #ff2bd6aa;
+  box-shadow:0 -18px 50px #ff2bd633, inset 0 8px 0 #2bfff222;
+  z-index:4;image-rendering:pixelated;
+}
+.layer{
+  position:absolute;left:0;bottom:0;width:400%;
+  background-repeat:repeat-x;background-position:left bottom;
+  image-rendering:pixelated;will-change:transform;pointer-events:none;
+  z-index:2;
+}
+/* Integer-ish cover: tile by height so rooftops sit on the ground strip */
+.layer.far{
+  height:100%;bottom:0;
+  background-size:auto 100%;
+  opacity:.9;filter:brightness(1.25) saturate(1.45);
+}
+.layer.mid{
+  height:78%;bottom:0;
+  background-size:auto 100%;
+  opacity:1;filter:brightness(1.12) saturate(1.35);
+}
+.layer.near{
+  height:70%;bottom:0;
+  background-size:auto 100%;
+  opacity:1;z-index:3;
+  filter:brightness(1.18) saturate(1.4) drop-shadow(0 0 16px #2bfff244);
+}
+.layer.sign{
+  width:auto;height:calc(35px * 3);bottom:48%;left:58%;
+  opacity:1;z-index:3;
+  filter:drop-shadow(0 0 12px #ff2bd6cc);
+}
 .daynight{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,200,87,.18),transparent 40%,rgba(5,7,26,.35));
-  opacity:0;mix-blend-mode:soft-light;
+  position:absolute;inset:0;pointer-events:none;z-index:5;
+  background:linear-gradient(180deg,rgba(255,200,87,.32),rgba(255,140,60,.12) 35%,transparent 60%);
+  opacity:1;mix-blend-mode:soft-light;
+}
+.nightveil{
+  position:absolute;inset:0;pointer-events:none;z-index:5;
+  background:linear-gradient(180deg,rgba(20,10,50,.15),rgba(5,7,26,.45) 70%);
+  opacity:0;
 }
 .courier{
-  position:absolute;width:56px;height:64px;left:12%;top:42%;
-  image-rendering:pixelated;filter:drop-shadow(0 0 8px #39ff14aa);
-  will-change:transform;
+  position:absolute;width:84px;height:96px;left:6%;bottom:12%;
+  image-rendering:pixelated;filter:drop-shadow(0 0 12px #39ff14dd);
+  will-change:transform;z-index:6;
 }
 .parcel-fly{
-  position:absolute;width:18px;height:14px;left:18%;top:40%;
-  background:var(--parcel);border:2px solid #ffd0f5;
-  box-shadow:0 0 12px #ff2bd6;image-rendering:pixelated;
-  will-change:transform;
+  position:absolute;width:42px;height:32px;left:13%;bottom:22%;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  image-rendering:pixelated;filter:drop-shadow(0 0 12px #ff2bd6);
+  will-change:transform;z-index:6;
 }
 .mailbox{
-  position:absolute;width:66px;height:72px;right:14%;bottom:22%;
-  image-rendering:pixelated;filter:drop-shadow(0 0 6px #2bfff2aa);
+  position:absolute;width:72px;height:78px;right:10%;bottom:9%;
+  image-rendering:pixelated;filter:drop-shadow(0 0 8px #2bfff2aa);
+  z-index:6;
 }
 .eiffel{
-  position:absolute;width:120px;height:160px;right:22%;bottom:28%;
-  image-rendering:pixelated;opacity:0;filter:drop-shadow(0 0 10px #ffc85788);
+  position:absolute;width:192px;height:256px;right:14%;bottom:8%;
+  image-rendering:pixelated;opacity:0;z-index:5;
+  filter:drop-shadow(0 0 18px #ffc857cc);
 }
 .route-caption{
-  position:relative;z-index:2;text-align:center;padding:18px 16px;
-  background:rgba(5,7,26,.45);border:1px solid #ff2bd644;backdrop-filter:blur(4px);
-  max-width:min(520px,90vw);
+  position:absolute;z-index:8;left:50%;top:76px;bottom:auto;transform:translateX(-50%);
+  text-align:center;padding:10px 14px;
+  background:rgba(5,7,26,.82);border:1px solid #ff2bd666;
+  backdrop-filter:blur(6px);max-width:min(480px,92vw);
+  box-shadow:0 0 24px #ff2bd633;
 }
-.route-caption h2{margin:0 0 6px;font-size:18px;letter-spacing:.08em}
+.route-caption h2{margin:0 0 6px;font-size:18px;letter-spacing:.08em;color:var(--cyan)}
 .route-caption p{margin:0;color:var(--muted)}
 .biome-tag{display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid var(--cyan);color:var(--cyan);letter-spacing:.12em}
+
+@media (max-width:520px){
+  .route-caption{top:68px;bottom:auto;padding:8px 10px}
+  .route-caption h2{font-size:14px}
+  .courier{width:64px;height:72px;bottom:11%}
+  .parcel-fly{width:32px;height:24px;bottom:20%}
+  .eiffel{width:120px;height:160px;bottom:8%}
+  .layer.mid{height:85%}
+  .layer.near{height:78%}
+}
 
 /* TERMINAL */
 .terminal{
@@ -193,6 +249,18 @@ a:hover{color:var(--parcel)}
 .section-lede{color:var(--muted);margin:0 0 28px;max-width:56ch}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media (max-width:860px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){
+  .hero{padding:72px 0 32px;min-height:100dvh}
+  .hero-ui .h1{font-size:18px}
+  .hero-frame{width:min(960px,94vw)}
+  .cta-row{flex-direction:column;align-items:stretch}
+  .btn{width:100%}
+  .how,.biomes,.cta-end{padding:64px 0}
+  .term-box{padding:20px 14px}
+  .term-line{font-size:14px}
+  .grid4{grid-template-columns:1fr;gap:10px}
+  .rail{grid-auto-columns:minmax(200px,78vw)}
+}
 .card{
   border:1px solid #2bfff233;background:rgba(11,15,26,.7);padding:14px;
   box-shadow:0 0 20px #2bfff211;min-height:140px;
