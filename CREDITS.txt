@@ -1,0 +1,17 @@
+Neon Parcel credits
+This file ships next to index.html. It is not a license for the whole game.
+No project LICENSE has been chosen.
+
+Mailbox at the drop point
+  Sprite: art/depot/mailbox-flag-up.png
+  Author: Molly "Cougarmint" Willits
+  Source: https://opengameart.org/content/maibox-sprite-pack
+  License: https://creativecommons.org/licenses/by/3.0/
+  The page and the flag-up patch readme grant CC-BY 3.0.
+  The older pack readme also named CC-BY-SA 3.0. The project page says the
+  licence was changed to CC-BY.
+  Modification: shortened post; head and flag retained at native pixels.
+  This sprite stays CC-BY 3.0. It is not a Kenney CC0 file.
+
+Other notices
+  See CREDITS.md and art/sewer/CREDITS.txt.

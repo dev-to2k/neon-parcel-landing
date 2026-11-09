@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neon Parcel — Rooftop Night Courier</title>
+<meta name="description" content="Neon Parcel: chạy giao hàng trên mái nhà neon. Dash, xích parcel hồng, stomp drone, boss VoltSec. Pixel 2D web game.">
+<meta property="og:title" content="Neon Parcel — Rooftop Night Courier">
+<meta property="og:image" content="assets/media/01-title.png">
+<link rel="preload" href="assets/fonts/fusion-pixel-12px-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top">
+    <img src="assets/depot/mailbox-flag-up.png" width="22" height="24" alt="" class="pixel">
+    <span>NEON PARCEL</span>
+  </a>
+  <button class="nav-cta" type="button" data-play>CHƠI NGAY</button>
+</header>
+
+<main id="top">
+  <!-- 1 HERO -->
+  <section class="hero" id="hero" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="assets/media/hero-poster.png" alt="" width="960" height="540" fetchpriority="high">
+    </div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+    <div>
+      <div class="hero-frame" id="heroFrame">
+        <video id="heroVideo" class="pixel" poster="assets/media/hero-poster.png"
+          autoplay muted loop playsinline preload="metadata"
+          width="960" height="540">
+          <source src="assets/media/hero-loop.mp4" type="video/mp4">
+        </video>
+        <div class="scan" aria-hidden="true"></div>
+        <div class="flicker" aria-hidden="true"></div>
+      </div>
+      <div class="hero-ui">
+        <p class="kicker">PIXEL 2D · WEB · ZERO INSTALL</p>
+        <h1 class="h1">NEON PARCEL<br><span class="pink">Rooftop Night Courier</span></h1>
+        <p class="lede">Chạy giao hàng trên mái neon. Xích parcel hồng, stomp drone, cướp zipline, đối đầu VoltSec qua 12 map ngày/đêm.</p>
+        <div class="cta-row">
+          <button class="btn primary" type="button" data-play>CHƠI NGAY</button>
+          <button class="btn" type="button" id="btnDemo">XEM DEMO BOT</button>
+        </div>
+        <p class="hint">Demo bot chạy origin riêng · Chơi thật = origin khác (không ghi đè save của bạn bằng bot).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 ROUTE PIN -->
+  <section class="route" id="route" aria-label="Delivery route">
+    <div class="route-sticky">
+      <div class="skyline" aria-hidden="true">
+        <img class="plate pixel" src="assets/media/04-gameplay.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22;filter:saturate(1.2) brightness(.7)">
+        <div class="layer far" id="layFar" style="background-image:url('assets/warped/skyline-a.png')"></div>
+        <div class="layer mid" id="layMid" style="background-image:url('assets/warped/buildings-bg.png')"></div>
+        <div class="layer near" id="layNear" style="background-image:url('assets/warped/near-buildings-bg.png')"></div>
+        <img class="layer sign pixel" id="laySign" src="assets/warped/hotel-sign.png" alt="" width="68" height="35">
+        <div class="daynight" id="dayNight"></div>
+        <img class="courier pixel" id="courier" src="assets/sprites/courier.png" alt="" width="28" height="32">
+        <img class="parcel-fly pixel" id="parcelFly" src="assets/sprites/parcel.png" alt="" width="18" height="14" style="background:transparent;border:0;box-shadow:none;width:22px;height:18px">
+        <img class="mailbox pixel" id="mailbox" src="assets/depot/mailbox-flag-up.png" alt="" width="44" height="48">
+        <img class="eiffel pixel" id="eiffel" src="assets/paris/eiffel.png" alt="" width="96" height="128">
+      </div>
+      <div class="route-caption">
+        <h2>DELIVERY ROUTE</h2>
+        <p id="routeCopy">Cuộn để bay cùng parcel qua skyline Warped City — Neon night → Paris.</p>
+        <span class="biome-tag" id="biomeTag">BIOME · NEON</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 TERMINAL -->
+  <section class="terminal" id="terminal" aria-label="Tagline">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="scan" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="term-box">
+        <p class="prompt">&gt; BOOT NEON_PARCEL.EXE</p>
+        <p class="term-line" id="splitA">ROOFTOP NIGHT COURIER</p>
+        <p class="term-line" id="splitB">DELIVER. STOMP. SURVIVE.</p>
+        <p class="term-sub">5 story Nights · skill tree (air slam, roof dash, overdrive) · street hub shop/forge — tất cả trong một <code>index.html</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 HOW -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <h2>CÁCH CHƠI</h2>
+      <p class="section-lede">Feel lock của game: run 130 · jump −307 · gravity 980. Học nhanh, master lâu.</p>
+      <div class="grid4">
+        <article class="card reveal"><div class="n">01</div><h3>DASH MÁI</h3><p>A/D chạy · Space nhảy · Shift / double-tap roof dash.</p></article>
+        <article class="card reveal"><div class="n">02</div><h3>XÍCH PARCEL</h3><p>Nhặt parcel hồng, giữ combo, ném đúng mailbox depot.</p></article>
+        <article class="card reveal"><div class="n">03</div><h3>STOMP</h3><p>Đạp drone &amp; boss telegraph. Air slam (skill) từ trên cao.</p></article>
+        <article class="card reveal"><div class="n">04</div><h3>HUB ĐÊM</h3><p>Phím H: shop, forge, bills, giường — sống như courier thật.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 BIOMES -->
+  <section class="biomes" id="biomes">
+    <div class="wrap">
+      <h2>12 MAP · BOSSES</h2>
+      <p class="section-lede">Neon · Paris (Eiffel CC0) · Rio · Hạ Long… — Soft #4 façades, day/night. (Santorini landmark chưa sẵn — chưa showcase.)</p>
+      <div class="rail">
+        <figure class="biome reveal"><img class="pixel" src="assets/media/04-gameplay.png" width="480" height="270" alt="Neon gameplay" loading="lazy"><figcaption><strong>NEON</strong><span>night run</span></figcaption></figure>
+        <figure class="biome reveal"><img class="pixel" src="assets/media/102-paris-night.png" width="480" height="270" alt="Paris night" loading="lazy"><figcaption><strong>PARIS</strong><span>Eiffel</span></figcaption></figure>
+        <figure class="biome reveal"><img class="pixel" src="assets/media/100-rio-night.png" width="480" height="270" alt="Rio night" loading="lazy"><figcaption><strong>RIO</strong><span>warm night</span></figcaption></figure>
+        <figure class="biome reveal"><img class="pixel" src="assets/media/83-halong-night.png" width="480" height="270" alt="Ha Long night" loading="lazy"><figcaption><strong>HALONG</strong><span>karst</span></figcaption></figure>
+        <figure class="biome reveal"><img class="pixel" src="assets/media/06-boss-dasher.png" width="480" height="270" alt="Boss Dasher" loading="lazy"><figcaption><strong>DASHER</strong><span>VoltSec</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 CTA -->
+  <section class="cta-end" id="play">
+    <div class="wrap">
+      <p class="big">SẴN SÀNG GIAO ĐÊM NAY?</p>
+      <p class="section-lede" style="margin-inline:auto">Mở game trên origin chơi thật — không <code>?auto=1</code>. Save của bạn là của bạn.</p>
+      <button class="btn primary" type="button" data-play>CHƠI NEON PARCEL</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="credits">
+      <strong>Credits / giấy phép art</strong>
+      <p><img class="mail pixel" src="assets/depot/mailbox-flag-up.png" width="22" height="24" alt="">Mailbox sprite © Molly "Cougarmint" Willits — <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener">CC-BY 3.0</a> — modified (shortened post). Nguồn: <a href="https://opengameart.org/content/maibox-sprite-pack" rel="noopener">OpenGameArt</a>.</p>
+      <p>Warped City parallax by Luis Zuno (ansimuz) — CC0. Eiffel Tower by Magic105 — CC0.</p>
+      <p>Fusion Pixel Font by TakWolf — SIL OFL 1.1 (<a href="assets/fonts/OFL.txt">OFL.txt</a>).</p>
+      <p>Gameplay art / courier procedural trong game; landing sprites courier/parcel là pixel gốc cho marketing. Xem thêm <a href="CREDITS.txt">CREDITS.txt</a> · <a href="CREDITS.md">CREDITS.md</a>.</p>
+    </div>
+    <div class="row">
+      <span>Neon Parcel · landing v1 · không gắn SHA master</span>
+      <a href="https://github.com/dev-to2k/neon-parcel" rel="noopener">github.com/dev-to2k/neon-parcel</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.8/dist/lenis.min.js" defer></script>
+<script src="js/origins.js"></script>
+<script src="js/landing.js" defer></script>
+</body>
+</html>
