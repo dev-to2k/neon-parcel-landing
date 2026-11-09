@@ -1,9 +1,9 @@
-Neon Parcel credits
+Neon Parcel landing credits
 This file ships next to index.html. It is not a license for the whole game.
 No project LICENSE has been chosen.
 
 Mailbox at the drop point
-  Sprite: art/depot/mailbox-flag-up.png
+  Sprite: assets/depot/mailbox-flag-up.png
   Author: Molly "Cougarmint" Willits
   Source: https://opengameart.org/content/maibox-sprite-pack
   License: https://creativecommons.org/licenses/by/3.0/
@@ -13,5 +13,28 @@ Mailbox at the drop point
   Modification: shortened post; head and flag retained at native pixels.
   This sprite stays CC-BY 3.0. It is not a Kenney CC0 file.
 
+Courier
+  Sprites: assets/courier/idle.png, idle-frame.png (and source/)
+  Author: pixelgearz
+  Source: https://pixelgearz.itch.io/pixel-art-platformer-character
+  License: https://creativecommons.org/publicdomain/zero/1.0/
+  The page says CC0 1.0 and that no generative AI was used.
+  Credit is not required. It is recorded here anyway.
+  Modification: the two shirt reds (228,59,68) and (160,46,58) were
+  mapped offline to the courier greens #39FF14 and #1f9e0b.
+  Every other pixel is the author's. The cells are 16×16, drawn at
+  integer scale (×4 desktop / ×3 mobile) with image-rendering: pixelated.
+  Untouched copies are in assets/courier/source/.
+  Same asset pipeline as neon-parcel master art/courier via courier-skin.js.
+
+Warped City parallax
+  Author: Luis Zuno (ansimuz) — CC0
+
+Eiffel Tower
+  Author: Magic105 — CC0
+
+Fusion Pixel Font
+  Author: TakWolf — SIL OFL 1.1 (assets/fonts/OFL.txt)
+
 Other notices
-  See CREDITS.md and art/sewer/CREDITS.txt.
+  See CREDITS.md.

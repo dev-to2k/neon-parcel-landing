@@ -119,26 +119,29 @@
   routeTl.to(laySign, { x: () => px(-innerWidth * 1.1), ease: 'none' }, 0);
 
   // Fly across — mostly X; tiny bob so they stay on rooftops
+  // Fly across middle third; stay clear of far-left Eiffel and right mailbox
   routeTl.fromTo(courier,
     { x: 0, y: 0 },
-    { x: () => px(innerWidth * 0.7), y: () => px(-innerHeight * 0.03), ease: 'none' },
+    { x: () => px(innerWidth * 0.55), y: () => px(-innerHeight * 0.02), ease: 'none' },
     0
   );
   routeTl.fromTo(parcelFly,
     { x: 0, y: 0, rotation: -6 },
-    { x: () => px(innerWidth * 0.76), y: () => px(-innerHeight * 0.05), rotation: 20, ease: 'none' },
+    { x: () => px(innerWidth * 0.6), y: () => px(-innerHeight * 0.04), rotation: 18, ease: 'none' },
     0
   );
-  routeTl.to(mailbox, { x: () => px(-innerWidth * 0.1), ease: 'none' }, 0);
+  // Mailbox stays on the right — slight drift only, never onto Eiffel (left)
+  routeTl.to(mailbox, { x: () => px(-innerWidth * 0.04), ease: 'none' }, 0);
 
-  // Day → night, then Paris plate + Eiffel over dimmed neon layers
-  routeTl.to(dayNight, { opacity: 0, ease: 'none' }, 0);
-  routeTl.to(nightVeil, { opacity: 0.85, ease: 'none' }, 0);
-  // Keep Warped layers mostly opaque so rooftops stay full-bleed; Paris = tint + Eiffel
-  routeTl.to([layNear, layMid, laySign], { opacity: 0.55, ease: 'none' }, 0.5);
-  routeTl.to(layFar, { opacity: 0.45, ease: 'none' }, 0.5);
-  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.38, ease: 'none' }, 0.4);
-  routeTl.fromTo(eiffel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none' }, 0.38);
+  // Day → night across full scrub; Paris locks in by ~55% scroll
+  routeTl.to(dayNight, { opacity: 0, duration: 1, ease: 'none' }, 0);
+  routeTl.to(nightVeil, { opacity: 0.65, duration: 1, ease: 'none' }, 0);
+  // Neon skyline + HOTEL sign collapse so Paris plate + far Eiffel dominate
+  routeTl.to(laySign, { opacity: 0, duration: 0.22, ease: 'none' }, 0.32);
+  routeTl.to([layNear, layMid], { opacity: 0.1, duration: 0.28, ease: 'none' }, 0.34);
+  routeTl.to(layFar, { opacity: 0.06, duration: 0.28, ease: 'none' }, 0.34);
+  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.8, duration: 0.28, ease: 'none' }, 0.3);
+  routeTl.fromTo(eiffel, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.26, ease: 'none' }, 0.28);
 
   ScrollTrigger.create({
     trigger: routeSticky,
@@ -147,14 +150,14 @@
     onUpdate: (self) => {
       const p = self.progress;
       if (p < 0.35) {
-        biomeTag.textContent = 'BIOME · NEON · DAY→NIGHT';
-        routeCopy.textContent = 'Bay cùng parcel qua skyline Warped City (CC0) — parallax integer-pixel.';
+        biomeTag.textContent = 'KHU · NEON · NGÀY→ĐÊM';
+        routeCopy.textContent = 'Bay cùng parcel qua skyline neon — giữ combo, giao đúng hòm thư.';
       } else if (p < 0.5) {
-        biomeTag.textContent = 'BIOME · NEON · NIGHT';
-        routeCopy.textContent = 'Đêm neon — rooftops + mailbox depot. Giữ combo, giao hàng.';
+        biomeTag.textContent = 'KHU · NEON · ĐÊM';
+        routeCopy.textContent = 'Đêm neon — mái nhà + hòm thư depot. Giữ combo, giao hàng.';
       } else {
-        biomeTag.textContent = 'BIOME · PARIS · NIGHT';
-        routeCopy.textContent = 'Paris night — Eiffel CC0 hiện lên. Delivery route tiếp tục.';
+        biomeTag.textContent = 'KHU · PARIS · ĐÊM';
+        routeCopy.textContent = 'Paris về đêm — Tháp Eiffel hiện rõ. Tuyến giao hàng tiếp tục.';
       }
     },
   });
@@ -163,7 +166,16 @@
   function splitReveal(el, delay = 0) {
     if (!el) return;
     try {
-      const split = SplitText.create(el, { type: 'chars', charsClass: 'char' });
+      const split = SplitText.create(el, { type: 'chars', charsClass: 'char', aria: 'none' });
+      const scrubAria = () => {
+        el.removeAttribute('aria-label');
+        el.removeAttribute('aria-labelledby');
+        el.removeAttribute('aria-describedby');
+      };
+      scrubAria();
+      // SplitText sometimes re-stamps aria-label after create — keep clear
+      const mo = new MutationObserver(scrubAria);
+      mo.observe(el, { attributes: true, attributeFilter: ['aria-label', 'aria-labelledby', 'aria-describedby'] });
       gsap.set(split.chars, { opacity: 0, y: 12 });
       ScrollTrigger.create({
         trigger: el,

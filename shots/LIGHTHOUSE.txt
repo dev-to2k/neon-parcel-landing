@@ -1,5 +1,5 @@
 mobile Lighthouse
-performance: 98
-accessibility: 90
+performance: 94
+accessibility: 100
 best-practices: 96
 seo: 100

@@ -13,3 +13,10 @@ Earlier motion studies mentioned free itch.io packs (cs5475, nerijs PVFX Foundry
 No project `LICENSE` file has been chosen. Font files keep their own SIL OFL notices. That is not a game-wide license. The shipped OFL texts define the term Reserved Font Name and do not name one after the copyright line. That is an observation, not legal clearance.
 
 The drop-point mailbox is a CC-BY 3.0 derivative, not a CC0 file. The release notice that ships next to `index.html` is `CREDITS.txt`.
+
+
+## Courier (pixelgearz)
+
+- Source: https://pixelgearz.itch.io/pixel-art-platformer-character
+- License: [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+- Shirt reds remapped to courier greens `#39FF14` / `#1f9e0b`. Landing uses `assets/courier/idle-frame.png` at integer ×4 / ×3.
