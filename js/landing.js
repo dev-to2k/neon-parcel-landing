@@ -115,7 +115,10 @@
 
   routeTl.to(layFar, { x: () => px(-innerWidth * 0.45), ease: 'none' }, 0);
   routeTl.to(layMid, { x: () => px(-innerWidth * 0.9), ease: 'none' }, 0);
-  routeTl.to(layNear, { x: () => px(-innerWidth * 1.4), ease: 'none' }, 0);
+  // Mobile: start near layer shifted so boss silhouette sits right of courier
+  const nearShift = () => (innerWidth <= 520 ? px(innerWidth * 0.35) : 0);
+  gsap.set(layNear, { x: nearShift });
+  routeTl.to(layNear, { x: () => px(nearShift() - innerWidth * 1.4), ease: 'none' }, 0);
   routeTl.to(laySign, { x: () => px(-innerWidth * 1.1), ease: 'none' }, 0);
 
   // Fly across — mostly X; tiny bob so they stay on rooftops
@@ -136,12 +139,11 @@
   // Day → night across full scrub; Paris locks in by ~55% scroll
   routeTl.to(dayNight, { opacity: 0, duration: 1, ease: 'none' }, 0);
   routeTl.to(nightVeil, { opacity: 0.65, duration: 1, ease: 'none' }, 0);
-  // Neon skyline + HOTEL sign collapse so Paris plate + far Eiffel dominate
-  routeTl.to(laySign, { opacity: 0, duration: 0.22, ease: 'none' }, 0.32);
-  routeTl.to([layNear, layMid], { opacity: 0.1, duration: 0.28, ease: 'none' }, 0.34);
-  routeTl.to(layFar, { opacity: 0.06, duration: 0.28, ease: 'none' }, 0.34);
-  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.8, duration: 0.28, ease: 'none' }, 0.3);
-  routeTl.fromTo(eiffel, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.26, ease: 'none' }, 0.28);
+  // Paris: fully hide Neon skyline (VOLT / pink windows / HOTEL) — plate + Eiffel only
+  routeTl.to(laySign, { opacity: 0, duration: 0.2, ease: 'none' }, 0.28);
+  routeTl.to([layNear, layMid, layFar], { opacity: 0, duration: 0.26, ease: 'none' }, 0.3);
+  routeTl.fromTo(plateParis, { opacity: 0 }, { opacity: 0.92, duration: 0.28, ease: 'none' }, 0.28);
+  routeTl.fromTo(eiffel, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.26, ease: 'none' }, 0.26);
 
   ScrollTrigger.create({
     trigger: routeSticky,
@@ -157,7 +159,7 @@
         routeCopy.textContent = 'Đêm neon — mái nhà + hòm thư depot. Giữ combo, giao hàng.';
       } else {
         biomeTag.textContent = 'KHU · PARIS · ĐÊM';
-        routeCopy.textContent = 'Paris về đêm — Tháp Eiffel hiện rõ. Tuyến giao hàng tiếp tục.';
+        routeCopy.textContent = 'Paris về đêm, giao hàng dưới tháp Eiffel.';
       }
     },
   });

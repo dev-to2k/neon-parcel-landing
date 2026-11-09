@@ -244,9 +244,10 @@ a:hover{color:var(--parcel)}
   .layer.sign{
     height:calc(35px * 2);left:4%;bottom:58%;max-width:32vw;
   }
-  .layer.mid{height:72%;opacity:.85}
-  .layer.near{height:62%;opacity:.9}
-  .layer.far{opacity:.75}
+  .layer.mid{height:68%;opacity:.8}
+  /* push dense “boss” silhouette right of courier */
+  .layer.near{height:58%;opacity:.88;background-position:-140px bottom}
+  .layer.far{opacity:.7}
 }
 
 /* TERMINAL — tight to route */
@@ -284,9 +285,15 @@ a:hover{color:var(--parcel)}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media (max-width:860px){.grid4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){
-  .hero{padding:64px 0 24px;min-height:100dvh}
+  .hero{
+    padding:72px 0 16px;min-height:100dvh;
+    align-content:start;place-items:center start;
+    display:flex;flex-direction:column;justify-content:flex-start;align-items:center;
+  }
+  .hero > div{width:100%;display:flex;flex-direction:column;align-items:center}
   .hero-ui .h1{font-size:16px}
-  .hero-frame{width:min(300px,78vw)}
+  .hero-frame{width:min(320px,86vw);margin-top:0}
+  .hero-ui{margin-top:10px}
   .cta-row{flex-direction:column;align-items:stretch}
   .btn{width:100%}
   .how,.biomes,.cta-end{padding:56px 0}
