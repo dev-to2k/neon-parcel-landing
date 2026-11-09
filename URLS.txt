@@ -1,10 +1,6 @@
-PUBLIC (GitHub Pages — canonical HTML)
+PUBLIC (GitHub Pages — canonical)
   LANDING: https://dev-to2k.github.io/neon-parcel-landing/
   PLAY:    https://dev-to2k.github.io/neon-parcel-play/
   DEMO:    https://raw.githack.com/dev-to2k/neon-parcel-demo/main/index.html?auto=1&map=neon
-           (demo origin ≠ github.io → localStorage isolated from play)
 
-LOCAL box
-  LANDING http://127.0.0.1:8890/
-  PLAY    http://127.0.0.1:8780/
-  DEMO    http://127.0.0.1:8781/
+Commit: a1e523adf9501cdb31b0f1b2dd12944e94b6bb81
