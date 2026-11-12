@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Neon Parcel — Chạy giao hàng trên mái neon</title>
-<meta name="description" content="Neon Parcel: chạy giao hàng trên mái nhà neon. Dash mái, xích parcel hồng, giẫm drone, đối đầu VoltSec. Game pixel 2D trên web.">
-<meta property="og:title" content="Neon Parcel — Chạy giao hàng trên mái neon">
-<meta property="og:image" content="assets/media/01-title.png">
+<title>Neon Parcel — Shipper đêm trên mái nhà</title>
+<meta name="description" content="Neon Parcel: game pixel 2D chơi ngay trên trình duyệt. Chạy giao hàng trên mái nhà qua 13 thành phố ngày và đêm, giẫm drone, hạ boss, sống đời shipper đêm.">
+<meta name="theme-color" content="#05071a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neon Parcel — Shipper đêm trên mái nhà">
+<meta property="og:description" content="Game pixel 2D chơi ngay trên trình duyệt. 13 thành phố, ngày và đêm, không cần cài đặt.">
+<meta property="og:url" content="https://dev-to2k.github.io/neon-parcel-landing/">
+<meta property="og:image" content="https://dev-to2k.github.io/neon-parcel-landing/assets/media/01-title.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/sprites/parcel.png">
 <link rel="preload" href="assets/fonts/fusion-pixel-12px-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/landing.css?v=2">
 </head>
 <body>
 <header class="nav">
@@ -16,118 +22,216 @@
     <img src="assets/depot/mailbox-flag-up.png" width="22" height="24" alt="" class="pixel">
     <span>NEON PARCEL</span>
   </a>
-  <button class="nav-cta" type="button" data-play>CHƠI NGAY</button>
+  <nav class="nav-links" aria-label="Mục lục">
+    <a href="#tour">BẢN ĐỒ</a>
+    <a href="#night">LỐI CHƠI</a>
+    <a href="#modes">CHẾ ĐỘ</a>
+    <a href="#controls">ĐIỀU KHIỂN</a>
+  </nav>
+  <a class="btn primary small" data-play href="https://dev-to2k.github.io/neon-parcel-play/" target="_blank" rel="noopener">CHƠI NGAY</a>
 </header>
 
 <main id="top">
-  <!-- 1 HERO -->
-  <section class="hero" id="hero" aria-label="Hero">
-    <div class="hero-bg" aria-hidden="true">
-      <img src="assets/media/hero-bg.png" alt="" width="960" height="540" fetchpriority="high">
-    </div>
-    <div class="hero-vignette" aria-hidden="true"></div>
-    <div>
-      <div class="hero-frame" id="heroFrame">
-        <video id="heroVideo" class="pixel" poster="assets/media/hero-poster.png"
-          autoplay muted loop playsinline preload="metadata"
-          width="960" height="540">
-          <source src="assets/media/hero-loop.mp4" type="video/mp4">
-        </video>
-        <div class="hud-mask" aria-hidden="true"></div>
-        <div class="hud-mask-bot" aria-hidden="true"></div>
-        <div class="scan" aria-hidden="true"></div>
-        <div class="flicker" aria-hidden="true"></div>
-      </div>
-      <div class="hero-ui">
-        <p class="kicker">PIXEL 2D · WEB · KHÔNG CÀI ĐẶT</p>
-        <h1 class="h1">NEON PARCEL<br><span class="pink">Giao hàng đêm trên mái</span></h1>
-        <p class="lede">Chạy giao hàng trên mái neon. Xách kiện hàng hồng, giẫm drone, bám zipline, đối đầu VoltSec qua 12 bản đồ ngày&nbsp;và&nbsp;đêm.</p>
-        <div class="cta-row">
-          <button class="btn primary" type="button" data-play>CHƠI NGAY</button>
-          <button class="btn" type="button" id="btnDemo">XEM DEMO BOT</button>
-        </div>
-        <p class="hint">Demo bot không đụng vào dữ liệu lưu của bạn.</p>
-        <a class="scroll-cue" href="#route" aria-label="Cuộn xuống">Cuộn xuống ↓</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2 ROUTE PIN -->
-  <section class="route" id="route" aria-label="Tuyến giao hàng">
-    <div class="route-sticky">
-      <div class="skyline" aria-hidden="true">
-        <img class="plate pixel" id="plateNeon" src="assets/media/04-gameplay.png" alt="" width="960" height="540" hidden>
-        <img class="plate paris pixel" id="plateParis" src="assets/media/102-paris-night.png" alt="" width="960" height="540">
-        <div class="layer far" id="layFar" style="background-image:url('assets/warped/skyline-a.png')"></div>
-        <div class="layer mid" id="layMid" style="background-image:url('assets/warped/buildings-bg.png')"></div>
-        <div class="layer near" id="layNear" style="background-image:url('assets/warped/near-buildings-bg.png')"></div>
-        <img class="layer sign pixel" id="laySign" src="assets/warped/hotel-sign.png" alt="" width="68" height="35">
-        <!-- Eiffel sits in the FAR layer stack (z-index 1), left side -->
-        <img class="eiffel pixel" id="eiffel" src="assets/paris/eiffel.png" alt="" width="144" height="192">
-        <div class="daynight" id="dayNight"></div>
-        <div class="nightveil" id="nightVeil"></div>
-        <img class="courier pixel" id="courier" src="assets/courier/idle-frame.png" alt="" width="16" height="16">
-        <img class="parcel-fly pixel" id="parcelFly" src="assets/sprites/parcel.png" alt="" width="36" height="28">
-        <img class="mailbox pixel" id="mailbox" src="assets/depot/mailbox-flag-up.png" alt="" width="66" height="72">
-        <div class="ground" aria-hidden="true"></div>
-      </div>
-      <div class="route-caption">
-        <h2>TUYẾN GIAO HÀNG</h2>
-        <p id="routeCopy">Cuộn để bay cùng parcel qua skyline — Neon tới Paris.</p>
-        <span class="biome-tag" id="biomeTag">KHU · NEON · NGÀY</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3 TERMINAL -->
-  <section class="terminal" id="terminal" aria-label="Khẩu hiệu">
-    <div class="glow" aria-hidden="true"></div>
+  <section class="hero" id="hero" aria-label="Giới thiệu">
+    <video id="heroVideo" class="hero-video pixel" poster="assets/media/hero-poster.png"
+      autoplay muted loop playsinline preload="metadata" width="960" height="480" aria-hidden="true">
+      <source src="assets/media/hero-loop.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade" aria-hidden="true"></div>
     <div class="scan" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="term-box">
-        <p class="prompt">&gt; BOOT NEON_PARCEL.EXE</p>
-        <div class="term-line" id="splitA">GIAO HÀNG ĐÊM TRÊN MÁI</div>
-        <div class="term-line" id="splitB">GIAO. GIẪM. SỐNG SÓT.</div>
-        <p class="term-sub">Năm đêm kể chuyện. Mở kỹ năng mới mỗi đêm. Về phố để mua đồ, nghỉ ngơi, rồi lại lên mái giao hàng.</p>
+    <div class="wrap hero-in">
+      <p class="eyebrow">GAME PIXEL 2D · CHƠI NGAY TRÊN TRÌNH DUYỆT</p>
+      <h1 class="logo" aria-label="Neon Parcel">
+        <span class="logo-neon" aria-hidden="true">NEON</span>
+        <span class="logo-parcel" aria-hidden="true">PARCEL</span>
+      </h1>
+      <p class="lede">Shipper đêm trên mái nhà. Xách kiện hàng hồng, giẫm drone, bám zipline và hạ boss VoltSec qua 13 thành phố, từ Sài Gòn tới Paris.</p>
+      <div class="cta-row">
+        <a class="btn primary" data-play href="https://dev-to2k.github.io/neon-parcel-play/" target="_blank" rel="noopener">▶ CHƠI NGAY</a>
+        <button class="btn" type="button" id="btnDemo">XEM BOT CHƠI THỬ</button>
+      </div>
+      <p class="hint">Miễn phí · không cài đặt · chơi được trên điện thoại</p>
+    </div>
+    <ul class="hud" aria-label="Thông số game">
+      <li><strong>13</strong><span>THÀNH PHỐ</span></li>
+      <li><strong>2</strong><span>NGÀY VÀ ĐÊM</span></li>
+      <li><strong>5</strong><span>ĐÊM CỐT TRUYỆN</span></li>
+      <li><strong>0</strong><span>MB CÀI ĐẶT</span></li>
+    </ul>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-run">
+      <span>NEON CITY</span><span>SANTORINI</span><span>HẠ LONG</span><span>FUJI</span><span>GRAND CANYON</span><span>MACHU PICCHU</span><span>VENICE</span><span>ICELAND</span><span>SAHARA</span><span>CAPPADOCIA</span><span>RIO</span><span>PARIS</span><span>SÀI GÒN</span>
+      <span>NEON CITY</span><span>SANTORINI</span><span>HẠ LONG</span><span>FUJI</span><span>GRAND CANYON</span><span>MACHU PICCHU</span><span>VENICE</span><span>ICELAND</span><span>SAHARA</span><span>CAPPADOCIA</span><span>RIO</span><span>PARIS</span><span>SÀI GÒN</span>
+    </div>
+  </div>
+
+  <section class="tour" id="tour" data-time="night" aria-labelledby="tourTitle">
+    <div class="tour-pin">
+      <div class="wrap tour-head">
+        <div>
+          <p class="eyebrow">01 · LỘ TRÌNH</p>
+          <h2 id="tourTitle">VÒNG QUANH THẾ GIỚI</h2>
+          <p class="section-lede">Mỗi thành phố một mặt tiền, một bầu trời, một con boss. Cuộn để bay hết 13 chặng.</p>
+        </div>
+        <div class="tour-tools">
+          <div class="seg" role="group" aria-label="Thời gian trong ngày">
+            <button type="button" data-time-btn="night" aria-pressed="true">ĐÊM</button>
+            <button type="button" data-time-btn="day" aria-pressed="false">NGÀY</button>
+          </div>
+          <p class="tour-count" aria-hidden="true">CHẶNG <b id="tourCount">01</b>/13</p>
+        </div>
+      </div>
+
+      <div class="tour-track" id="tourTrack" tabindex="0" role="region" aria-label="13 thành phố trong game">
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/neon-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/neon-night.png" width="480" height="240" alt="Neon City về đêm" loading="lazy" decoding="async">
+          <figcaption><b>01</b><div><strong>NEON CITY</strong><span>Sài Gòn 2077 · mái nhà neon và tàu điện trên cao</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/santorini-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/santorini-night.png" width="480" height="240" alt="Santorini về đêm" loading="lazy" decoding="async">
+          <figcaption><b>02</b><div><strong>SANTORINI</strong><span>Hy Lạp · vách trắng mái xanh bên biển</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/halong-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/halong-night.png" width="480" height="240" alt="Vịnh Hạ Long về đêm" loading="lazy" decoding="async">
+          <figcaption><b>03</b><div><strong>VỊNH HẠ LONG</strong><span>Việt Nam · núi đá vôi giữa vịnh ngọc</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/fuji-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/fuji-night.png" width="480" height="240" alt="Núi Phú Sĩ về đêm" loading="lazy" decoding="async">
+          <figcaption><b>04</b><div><strong>NÚI PHÚ SĨ</strong><span>Nhật Bản · hoa anh đào dưới chân núi tuyết</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/canyon-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/canyon-night.png" width="480" height="240" alt="Grand Canyon về đêm" loading="lazy" decoding="async">
+          <figcaption><b>05</b><div><strong>GRAND CANYON</strong><span>Mỹ · vách đá đỏ lúc hoàng hôn</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/machu-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/machu-night.png" width="480" height="240" alt="Machu Picchu về đêm" loading="lazy" decoding="async">
+          <figcaption><b>06</b><div><strong>MACHU PICCHU</strong><span>Peru · ruộng bậc thang trên mây</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/venice-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/venice-night.png" width="480" height="240" alt="Venice về đêm" loading="lazy" decoding="async">
+          <figcaption><b>07</b><div><strong>VENICE</strong><span>Ý · kênh đào và gondola</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/iceland-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/iceland-night.png" width="480" height="240" alt="Iceland về đêm" loading="lazy" decoding="async">
+          <figcaption><b>08</b><div><strong>ICELAND</strong><span>Vík · cực quang trên vách bazan</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/sahara-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/sahara-night.png" width="480" height="240" alt="Sahara về đêm" loading="lazy" decoding="async">
+          <figcaption><b>09</b><div><strong>SAHARA</strong><span>Ma-rốc · đoàn lạc đà qua cồn cát</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/cappadocia-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/cappadocia-night.png" width="480" height="240" alt="Cappadocia về đêm" loading="lazy" decoding="async">
+          <figcaption><b>10</b><div><strong>CAPPADOCIA</strong><span>Thổ Nhĩ Kỳ · khinh khí cầu trên thung lũng đá</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/rio-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/rio-night.png" width="480" height="240" alt="Rio de Janeiro về đêm" loading="lazy" decoding="async">
+          <figcaption><b>11</b><div><strong>RIO DE JANEIRO</strong><span>Brazil · bãi biển dưới núi Đường</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/paris-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/paris-night.png" width="480" height="240" alt="Paris về đêm" loading="lazy" decoding="async">
+          <figcaption><b>12</b><div><strong>PARIS</strong><span>Pháp · tháp Eiffel bên sông Seine</span></div></figcaption>
+        </figure>
+        <figure class="stop">
+          <img class="pixel" src="assets/maps/saigon-day.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+          <img class="pixel at-night" src="assets/maps/saigon-night.png" width="480" height="240" alt="Sài Gòn về đêm" loading="lazy" decoding="async">
+          <figcaption><b>13</b><div><strong>SÀI GÒN</strong><span>Việt Nam · chợ Bến Thành và Nhà thờ Đức Bà</span></div></figcaption>
+        </figure>
+      </div>
+
+      <div class="wrap">
+        <div class="route-line" id="routeLine" aria-hidden="true">
+          <ol id="routeDots"></ol>
+          <img class="route-courier pixel" src="assets/courier/idle-frame.png" width="16" height="16" alt="">
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 4 HOW -->
-  <section class="how" id="how">
+  <section class="night" id="night" aria-labelledby="nightTitle">
     <div class="wrap">
-      <h2>CÁCH CHƠI</h2>
-      <p class="section-lede">Chạy, nhảy, trượt zipline: dễ vào, khó thành&nbsp;thạo.</p>
-      <div class="grid4">
-        <article class="card reveal"><div class="n">01</div><h3>DASH MÁI</h3><p>A/D chạy · Space nhảy · Shift hoặc double-tap để dash trên mái.</p></article>
-        <article class="card reveal"><div class="n">02</div><h3>XÍCH PARCEL</h3><p>Nhặt parcel hồng, giữ combo, ném đúng hòm thư depot.</p></article>
-        <article class="card reveal"><div class="n">03</div><h3>GIẪM</h3><p>Giẫm drone và xem telegraph của boss. Đạp không từ trên cao.</p></article>
-        <article class="card reveal"><div class="n">04</div><h3>HUB ĐÊM</h3><p>Phím H: tiệm, lò rèn, hóa đơn, giường — sống như courier thật.</p></article>
+      <p class="eyebrow">02 · LỐI CHƠI</p>
+      <h2 id="nightTitle">MỘT ĐÊM CỦA SHIPPER</h2>
+      <p class="section-lede">Dễ vào trong ba mươi giây, khó thành thạo trong ba mươi đêm.</p>
+      <div class="bento">
+        <article class="tile t-wide reveal">
+          <img class="pixel" src="assets/shots/run.png" width="480" height="270" alt="Shipper chạy trên mái nhà neon" loading="lazy" decoding="async">
+          <div class="tile-body"><h3>CHẠY · NHẢY · DASH</h3><p>Lao qua khe mái, bám zipline, giữ combo kiện hàng hồng rồi ném trúng hòm thư. Nhảy càng đúng nhịp, điểm càng cao.</p></div>
+        </article>
+        <article class="tile t-mid reveal">
+          <img class="pixel" src="assets/shots/boss.png" width="480" height="270" alt="Boss Dasher của VoltSec" loading="lazy" decoding="async">
+          <div class="tile-body"><h3>HẠ BOSS VOLTSEC</h3><p>Dasher, Bomber, Zapper và trùm riêng của từng thành phố. Đọc tín hiệu báo đòn, giẫm đúng lúc.</p></div>
+        </article>
+        <article class="tile reveal">
+          <img class="pixel" src="assets/shots/hub.png" width="480" height="270" alt="Phố đêm với tiệm tạp hoá và quán cà phê" loading="lazy" decoding="async">
+          <div class="tile-body"><h3>VỀ PHỐ</h3><p>Nhận đơn ở bảng, ghé tiệm, vào lò rèn sửa đồ, trả hoá đơn rồi về phòng thuê ngủ một giấc.</p></div>
+        </article>
+        <article class="tile reveal">
+          <img class="pixel" src="assets/shots/sewer.png" width="480" height="270" alt="Ga metro bỏ hoang dưới cống" loading="lazy" decoding="async">
+          <div class="tile-body"><h3>XUỐNG CỐNG</h3><p>Ba tầng ga metro bỏ hoang. Mở rương, gom mảnh neon, quay về trước khi hết máu.</p></div>
+        </article>
+        <article class="tile reveal">
+          <img class="pixel" src="assets/shots/shop.png" width="480" height="270" alt="Bảng hàng rong với chip kính và giày huyền thoại" loading="lazy" decoding="async">
+          <div class="tile-body"><h3>LÊN ĐỒ</h3><p>Giày, găng, bùa và cây kỹ năng mở dần theo từng đêm: đạp không, dash mái, overdrive.</p></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- 5 BIOMES -->
-  <section class="biomes" id="biomes">
-    <div class="wrap">
-      <h2>12 BẢN ĐỒ · BOSS</h2>
-      <p class="section-lede">Neon · Paris (Tháp Eiffel) · Rio · Hạ Long… — mặt tiền Soft #4, ngày/đêm. (Santorini chưa sẵn — chưa showcase.)</p>
-      <div class="rail">
-        <figure class="biome reveal"><img class="pixel" src="assets/media/04-gameplay.png" width="480" height="270" alt="Neon gameplay" loading="lazy"><figcaption><strong>NEON</strong><span>chạy đêm</span></figcaption></figure>
-        <figure class="biome reveal"><img class="pixel" src="assets/media/102-paris-night.png" width="480" height="270" alt="Paris đêm" loading="lazy"><figcaption><strong>PARIS</strong><span>Eiffel</span></figcaption></figure>
-        <figure class="biome reveal"><img class="pixel" src="assets/media/100-rio-night.png" width="480" height="270" alt="Rio đêm" loading="lazy"><figcaption><strong>RIO</strong><span>đêm ấm</span></figcaption></figure>
-        <figure class="biome reveal"><img class="pixel" src="assets/media/83-halong-night.png" width="480" height="270" alt="Hạ Long đêm" loading="lazy"><figcaption><strong>HALONG</strong><span>karst</span></figcaption></figure>
-        <figure class="biome reveal"><img class="pixel" src="assets/media/06-boss-dasher.png" width="480" height="270" alt="Boss Dasher" loading="lazy"><figcaption><strong>DASHER</strong><span>VoltSec</span></figcaption></figure>
+  <section class="modes" id="modes" aria-labelledby="modesTitle">
+    <div class="wrap modes-grid">
+      <div>
+        <p class="eyebrow">03 · CHẾ ĐỘ</p>
+        <h2 id="modesTitle">CHỌN CA GIAO</h2>
+        <p class="section-lede">Bốn cách lên mái, bấm phím ngay ở màn hình tiêu đề.</p>
+        <ul class="menu">
+          <li class="reveal"><kbd>SPACE</kbd><div><h3>CỐT TRUYỆN 5 ĐÊM</h3><p>Mỗi đêm một mục tiêu và một kỹ năng mới.</p></div></li>
+          <li class="reveal"><kbd>V</kbd><div><h3>VÒNG QUANH THẾ GIỚI</h3><p>Một lượt chạy xuyên 13 thành phố. Hạ trùm để bay chặng tiếp.</p></div></li>
+          <li class="reveal"><kbd>D</kbd><div><h3>THỬ THÁCH NGÀY</h3><p>Cả thế giới chung một bản đồ mỗi ngày. Giữ chuỗi, khoe điểm, gửi link bóng ma cho bạn đua.</p></div></li>
+          <li class="reveal"><kbd>H</kbd><div><h3>ĐỜI SỐNG PHỐ ĐÊM</h3><p>Tiệm, lò rèn, hoá đơn, phòng thuê và lối xuống cống.</p></div></li>
+        </ul>
       </div>
+      <figure class="crt reveal">
+        <img class="pixel" src="assets/shots/tour.png" width="480" height="270" alt="Màn mở đầu chế độ Vòng quanh thế giới" loading="lazy" decoding="async">
+        <div class="scan" aria-hidden="true"></div>
+      </figure>
     </div>
   </section>
 
-  <!-- 6 CTA -->
-  <section class="cta-end" id="play">
+  <section class="controls" id="controls" aria-labelledby="controlsTitle">
     <div class="wrap">
-      <p class="big">SẴN SÀNG GIAO ĐÊM NAY?</p>
-      <p class="section-lede" style="margin-inline:auto">Mở game trên bản chơi thật — file lưu của bạn là của bạn.</p>
-      <button class="btn primary" type="button" data-play>CHƠI NEON PARCEL</button>
+      <p class="eyebrow">04 · ĐIỀU KHIỂN</p>
+      <h2 id="controlsTitle">BỐN PHÍM LÀ ĐỦ</h2>
+      <ul class="keys">
+        <li class="reveal"><span class="caps"><kbd>A</kbd><kbd>D</kbd></span><h3>CHẠY</h3><p>Hoặc phím mũi tên trái, phải.</p></li>
+        <li class="reveal"><span class="caps"><kbd>SPACE</kbd></span><h3>NHẢY</h3><p>Giữ lâu để nhảy cao, nhả sớm để cắt nhảy.</p></li>
+        <li class="reveal"><span class="caps"><kbd>SHIFT</kbd></span><h3>DASH MÁI</h3><p>Hoặc bấm đúp một hướng.</p></li>
+        <li class="reveal"><span class="caps"><kbd>S</kbd></span><h3>ĐẠP KHÔNG</h3><p>Bấm khi đang ở trên không.</p></li>
+      </ul>
+      <p class="touch-note">Trên điện thoại và máy tính bảng có sẵn nút cảm ứng: ◀ ▶, NHẢY, DASH, ĐẠP.</p>
+    </div>
+  </section>
+
+  <section class="cta-end" id="play" aria-labelledby="playTitle">
+    <img class="cta-bg pixel" src="assets/maps/neon-night.png" width="480" height="240" alt="" loading="lazy" decoding="async">
+    <div class="wrap">
+      <p class="prompt">&gt; BOOT NEON_PARCEL.EXE</p>
+      <h2 id="playTitle">GIAO. GIẪM. SỐNG SÓT.</h2>
+      <p class="section-lede">Mở là chơi. File lưu nằm trên máy của bạn và là của bạn.</p>
+      <a class="btn primary big" data-play href="https://dev-to2k.github.io/neon-parcel-play/" target="_blank" rel="noopener">▶ CHƠI NEON PARCEL</a>
     </div>
   </section>
 </main>
@@ -143,17 +247,25 @@
       <p>Xem thêm <a href="CREDITS.txt">CREDITS.txt</a> · <a href="CREDITS.md">CREDITS.md</a>.</p>
     </div>
     <div class="row">
-      <span>Neon Parcel · landing v1 · không gắn SHA master</span>
-      <a href="https://github.com/dev-to2k/neon-parcel" rel="noopener">github.com/dev-to2k/neon-parcel</a>
+      <span>Neon Parcel · landing v2</span>
+      <a href="https://github.com/dev-to2k/neon-parcel-landing" rel="noopener">github.com/dev-to2k/neon-parcel-landing</a>
     </div>
   </div>
 </footer>
 
+<dialog class="demo" id="demoDialog" aria-labelledby="demoTitle">
+  <div class="demo-bar">
+    <span id="demoTitle">BOT ĐANG CHƠI THỬ</span>
+    <button type="button" id="demoClose" aria-label="Đóng">ĐÓNG ✕</button>
+  </div>
+  <div class="demo-frame" id="demoFrame"></div>
+  <p class="demo-note">Bot chạy ở một địa chỉ riêng nên không đụng vào file lưu của bạn.</p>
+</dialog>
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.8/dist/lenis.min.js" defer></script>
 <script src="js/origins.js"></script>
-<script src="js/landing.js" defer></script>
+<script src="js/landing.js?v=2" defer></script>
 </body>
 </html>
